@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Hero } from '../hero';
+import { HeroService } from '../hero.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,5 +8,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
+  constructor(private heroService :HeroService){}
+
+  heroes: Hero[] = [];
+  selectedHero? : Hero;
+
+  ngOnInit(): void {
+    this.getHeroes();
+  }
+
+  // use subscribe to asyn fetch
+  getHeroes(): void{
+    this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes.slice(1,5));
+  }
 
 }
